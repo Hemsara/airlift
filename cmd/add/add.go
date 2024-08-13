@@ -2,33 +2,21 @@ package add
 
 import (
 	database "airlift/internal/connections"
+	"airlift/internal/styles"
 	"airlift/schemas"
 	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 
-	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/cobra"
-)
-
-var (
-	errorStyle = lipgloss.NewStyle().
-			Bold(true).
-			Foreground(lipgloss.Color("#FF0000")).
-			Background(lipgloss.Color("#000000"))
-
-	successStyle = lipgloss.NewStyle().
-			Bold(true).
-			Foreground(lipgloss.Color("#00FF00")).
-			Background(lipgloss.Color("#000000"))
 )
 
 var AddCmd = &cobra.Command{
 	Use:   "add",
 	Short: "🔥 Register a new app to airlift",
 	Run: func(cmd *cobra.Command, args []string) {
-		
+
 		project, _ := cmd.Flags().GetString("project")
 		path, _ := cmd.Flags().GetString("path")
 		apiKey, _ := cmd.Flags().GetString("apiKey")
@@ -36,18 +24,18 @@ var AddCmd = &cobra.Command{
 
 		expandedPath, err := ExpandUserPath(path)
 		if err != nil {
-			fmt.Println(errorStyle.Render("Error getting file info: " + err.Error()))
+			fmt.Println(styles.ErrStyle.Render("Error getting file info: " + err.Error()))
 			return
 		}
 
 		if _, err := os.Stat(expandedPath); err != nil {
-			fmt.Println(errorStyle.Render("Error accessing file: " + err.Error()))
+			fmt.Println(styles.ErrStyle.Render("Error accessing file: " + err.Error()))
 			return
 		}
 
 		abs, err := filepath.Abs(expandedPath)
 		if err != nil {
-			fmt.Println(errorStyle.Render("Error getting absolute path: " + err.Error()))
+			fmt.Println(styles.ErrStyle.Render("Error getting absolute path: " + err.Error()))
 			return
 		}
 
@@ -60,11 +48,11 @@ var AddCmd = &cobra.Command{
 			Path:        abs,
 		}
 		if err := db.Create(&session).Error; err != nil {
-			fmt.Println(errorStyle.Render("Error: Unable to add project. " + err.Error()))
+			fmt.Println(styles.ErrStyle.Render("Error: Unable to add project. " + err.Error()))
 			return
 		}
 
-		fmt.Println(successStyle.Render("🎉 Project registration successful! 🚀"))
+		fmt.Println(styles.SuccessStyle.Render("🎉 Project registration successful! 🚀"))
 	},
 }
 
@@ -80,7 +68,6 @@ func init() {
 	AddCmd.MarkFlagRequired("apiIssuer")
 }
 
-// ExpandUserPath expands `~` to the user home directory
 func ExpandUserPath(path string) (string, error) {
 	if strings.HasPrefix(path, "~") {
 		homeDir, err := os.UserHomeDir()

@@ -2,6 +2,7 @@ package main
 
 import (
 	add "airlift/cmd/add"
+	alter "airlift/cmd/alter"
 	database "airlift/internal/connections"
 	"airlift/pkg/initializers"
 
@@ -27,6 +28,7 @@ func Execute() {
 
 func addSubCommandPallet() {
 	rootCmd.AddCommand(add.AddCmd)
+	rootCmd.AddCommand(alter.AlterCmd)
 	rootCmd.AddCommand(list.ListCmd)
 	rootCmd.AddCommand(upload.UploadCmd)
 

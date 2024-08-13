@@ -20,7 +20,7 @@ import (
 
 var UploadCmd = &cobra.Command{
 	Use:   "upload",
-	Short: "Build and upload testflight binaries",
+	Short: "🦦 Build and upload testflight binaries",
 
 	Run: func(cmd *cobra.Command, args []string) {
 		q, _ := cmd.Flags().GetString("project")

@@ -13,7 +13,7 @@ import (
 
 var ListCmd = &cobra.Command{
 	Use:   "list",
-	Short: "List out registered apps",
+	Short: "🦖 List out registered apps",
 	Run: func(cmd *cobra.Command, args []string) {
 
 		var projects []schemas.Project
