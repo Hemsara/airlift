@@ -28,8 +28,6 @@ func Execute() {
 func addSubCommandPallet() {
 	rootCmd.AddCommand(add.AddCmd)
 	rootCmd.AddCommand(list.ListCmd)
-	// rootCmd.AddCommand(initialize.InitCmd)
-	// rootCmd.AddCommand(build.BuildCmd)
 	rootCmd.AddCommand(upload.UploadCmd)
 
 }
