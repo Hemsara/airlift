@@ -28,6 +28,7 @@ var AddCmd = &cobra.Command{
 	Use:   "add",
 	Short: "🔥 Register a new app to airlift",
 	Run: func(cmd *cobra.Command, args []string) {
+		
 		project, _ := cmd.Flags().GetString("project")
 		path, _ := cmd.Flags().GetString("path")
 		apiKey, _ := cmd.Flags().GetString("apiKey")
@@ -44,13 +45,19 @@ var AddCmd = &cobra.Command{
 			return
 		}
 
+		abs, err := filepath.Abs(expandedPath)
+		if err != nil {
+			fmt.Println(errorStyle.Render("Error getting absolute path: " + err.Error()))
+			return
+		}
+
 		db := database.DB
 
 		session := schemas.Project{
 			IssueID:     apiIssuer,
 			KeyID:       apiKey,
 			ProjectName: project,
-			Path:        expandedPath,
+			Path:        abs,
 		}
 		if err := db.Create(&session).Error; err != nil {
 			fmt.Println(errorStyle.Render("Error: Unable to add project. " + err.Error()))
@@ -63,9 +70,9 @@ var AddCmd = &cobra.Command{
 
 func init() {
 	AddCmd.Flags().StringP("project", "p", "", "Project name")
-	AddCmd.Flags().StringP("path", "P", "", "Path to the app")
-	AddCmd.Flags().StringP("apiKey", "k", "", "API key for authentication")
-	AddCmd.Flags().StringP("apiIssuer", "i", "", "API issuer for authentication")
+	AddCmd.Flags().StringP("path", "P", "", "Path to your flutter app")
+	AddCmd.Flags().StringP("apiKey", "k", "", "Apple API key ID")
+	AddCmd.Flags().StringP("apiIssuer", "i", "", "Apple API issuer ID")
 
 	AddCmd.MarkFlagRequired("project")
 	AddCmd.MarkFlagRequired("apiKey")
