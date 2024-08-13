@@ -3,7 +3,7 @@ package main
 import (
 	add "airlift/cmd/add"
 	database "airlift/internal/connections"
-	"airlift/internal/initializers"
+	"airlift/pkg/initializers"
 
 	list "airlift/cmd/list"
 
@@ -35,6 +35,7 @@ func addSubCommandPallet() {
 func init() {
 	initializers.LoadENV()
 	database.New()
+	initializers.MakeMigrations()
 
 	addSubCommandPallet()
 }
