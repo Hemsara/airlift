@@ -6,6 +6,7 @@ import (
 	"airlift/pkg/initializers"
 
 	list "airlift/cmd/list"
+	upload "airlift/cmd/upload"
 
 	"os"
 
@@ -29,7 +30,7 @@ func addSubCommandPallet() {
 	rootCmd.AddCommand(list.ListCmd)
 	// rootCmd.AddCommand(initialize.InitCmd)
 	// rootCmd.AddCommand(build.BuildCmd)
-	// rootCmd.AddCommand(upload.UploadCmd)
+	rootCmd.AddCommand(upload.UploadCmd)
 
 }
 func init() {
