@@ -35,17 +35,17 @@ var UploadCmd = &cobra.Command{
 		}
 
 		fmt.Println(styles.SuccessStyle.Render("Project found, Building binary.."))
-		// ipaCmd := exec.Command("flutter", "build", "ipa")
-		// ipaCmd.Dir = project.Path
+		ipaCmd := exec.Command("flutter", "build", "ipa")
+		ipaCmd.Dir = project.Path
 
-		// ipaCmd.Stdout = os.Stdout
-		// ipaCmd.Stderr = os.Stderr
+		ipaCmd.Stdout = os.Stdout
+		ipaCmd.Stderr = os.Stderr
 
-		// err := ipaCmd.Run()
-		// if err != nil {
-		// 	fmt.Printf("Error running flutter build ipa: %v\n", err)
-		// 	return
-		// }
+		err := ipaCmd.Run()
+		if err != nil {
+			fmt.Printf("Error running flutter build ipa: %v\n", err)
+			return
+		}
 		fmt.Println(styles.SuccessStyle.Render("IPA build completed, now uploading with xcrun..."))
 		ipaDirPath := filepath.Join(project.Path, "build", "ios", "ipa")
 

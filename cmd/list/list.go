@@ -21,8 +21,8 @@ var ListCmd = &cobra.Command{
 
 		if result.Error != nil {
 			fmt.Println(styles.ErrStyle.Render("Error Fetching your projects"))
-			fmt.Println(styles.SuccessStyle.Render("Your projects"))
 		}
+		fmt.Println(styles.SuccessStyle.Render("Your projects"))
 
 		w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.Debug)
 
