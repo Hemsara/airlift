@@ -1,12 +1,11 @@
 package main
 
 import (
-	build "airlift/cmd/build"
-
-	initialize "airlift/cmd/init"
+	add "airlift/cmd/add"
+	database "airlift/internal/connections"
+	"airlift/internal/initializers"
 
 	list "airlift/cmd/list"
-	upload "airlift/cmd/upload"
 
 	"os"
 
@@ -15,7 +14,7 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:   "airlift",
-	Short: "A brief description of your application",
+	Short: "🧪 Easily manage of testflight releases",
 }
 
 func Execute() {
@@ -26,14 +25,16 @@ func Execute() {
 }
 
 func addSubCommandPallet() {
+	rootCmd.AddCommand(add.AddCmd)
 	rootCmd.AddCommand(list.ListCmd)
-	rootCmd.AddCommand(initialize.InitCmd)
-	rootCmd.AddCommand(build.BuildCmd)
-
-	rootCmd.AddCommand(upload.UploadCmd)
+	// rootCmd.AddCommand(initialize.InitCmd)
+	// rootCmd.AddCommand(build.BuildCmd)
+	// rootCmd.AddCommand(upload.UploadCmd)
 
 }
 func init() {
+	initializers.LoadENV()
+	database.New()
 
 	addSubCommandPallet()
 }
